@@ -25,6 +25,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { usePlants, usePlantsByHabit } from '@/lib/hooks/usePlants';
 import { Plant, PlantHabit, RedListCategory } from '@/lib/types/plant';
 import { ImageWithZoom } from '@/components/ui/imageWithZoom';
+import { base64ToImageBlob } from '@/lib/helper';
 
 export default function PlantsPage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -124,6 +125,7 @@ export default function PlantsPage() {
                 <TableHeader>
                   <TableRow>
                     <TableHead className="w-[100px]">Image</TableHead>
+                    <TableHead className="w-[100px]">QR Code</TableHead>
                     <TableHead>Scientific Name</TableHead>
                     <TableHead>Tamil Name</TableHead>
                     <TableHead>Herbarium ID</TableHead>
@@ -160,7 +162,18 @@ export default function PlantsPage() {
                             }
                             alt={plant.scientific_name}
                             className="w-16 h-16 object-cover rounded-lg"
-                          />
+                          /> 
+                        </TableCell>
+                        <TableCell>
+                          <ImageWithZoom
+                            src={
+                              plant.qr_data
+                                ? URL.createObjectURL(base64ToImageBlob(plant.qr_data))
+                                : null
+                            }
+                            alt={"QR Code"}
+                            className="w-16 h-16 object-cover rounded-lg"
+                          /> 
                         </TableCell>
                         <TableCell className="font-medium">
                           {plant.scientific_name}

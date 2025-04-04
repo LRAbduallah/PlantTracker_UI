@@ -37,6 +37,7 @@ export interface Plant extends PlantInput {
   date_added: string;
   last_updated: string;
   rarity_score?: number;
+  qr_data?: string;
 }
 
 export interface PaginatedPlantsResponse {
