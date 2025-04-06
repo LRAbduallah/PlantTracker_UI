@@ -40,7 +40,6 @@ import { Plant, PlantHabit, RedListCategory } from '@/lib/types/plant';
 import { ImageWithZoom } from '@/components/ui/imageWithZoom';
 import { base64ToImageBlob } from '@/lib/helper';
 import api from '@/lib/services/api';
-import { useQueryClient } from '@tanstack/react-query';
 
 export default function PlantsPage() {
   const [searchQuery, setSearchQuery] = useState('');

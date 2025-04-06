@@ -79,9 +79,9 @@ export default function EditPlantPage() {
       collector: '',
       identifier: '',
       collection_date: new Date().toISOString().split('T')[0],
-      habit: 'Tree',
+      habit: '',
       description: '',
-      red_list_category: 'LC',
+      red_list_category: '',
       uses: '',
       ethnobotanical_notes: '',
       remarks: '',
@@ -108,9 +108,9 @@ export default function EditPlantPage() {
         collector: plant.collector || '',
         identifier: plant.identifier || '',
         collection_date: plant.collection_date || new Date().toISOString().split('T')[0],
-        habit: plant.habit as "Tree" | "Shrub" | "Herb" | "Climber" || 'Tree',
+        habit: plant.habit,
         description: plant.description || '',
-        red_list_category: plant.red_list_category as "EX" | "EW" | "CR" | "EN" | "VU" | "NT" | "LC" || 'LC',
+        red_list_category: plant.red_list_category as "EX" | "EW" | "CR" | "EN" | "VU" | "NT" | "LC" | 'NE' | 'NIL',
         uses: plant.uses || '',
         ethnobotanical_notes: plant.ethnobotanical_notes || '',
         remarks: plant.remarks || '',
@@ -240,7 +240,12 @@ export default function EditPlantPage() {
               <BasicInformationSection control={form.control} />
               <TaxonomySection control={form.control} />
               <CollectionSection control={form.control} />
-              <ClassificationSection control={form.control} />
+              <ClassificationSection 
+              control={form.control} 
+              defaultCategory={plant?.red_list_category}
+              defaultHabit={plant?.habit}
+              isEditMode={true}
+              />
               <LocationSection
                 control={form.control}
                 defaultLocationId={plant?.location}

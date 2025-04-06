@@ -93,11 +93,11 @@ export default function ThesisFrontPage() {
           <Card className="border border-green-200 shadow-lg bg-white/90 backdrop-blur-sm">
             <CardHeader className="text-center border-b border-green-100 pb-6">
               <CardTitle className="text-3xl md:text-4xl font-serif text-green-800">
-                Study of Flowering Plants and Traditional Medicinal Plants
+                DIGITAL FLORA OF VELLAMBI MALAI IN VEERAPULI RESERVED FOREST
               </CardTitle>
-              <CardDescription className="text-lg md:text-xl mt-2 text-green-700">
+              {/* <CardDescription className="text-lg md:text-xl mt-2 text-green-700">
                 Taxonomy and Biodiversity of the Vellambi Forest
-              </CardDescription>
+              </CardDescription> */}
             </CardHeader>
 
             <CardContent className="pt-6">

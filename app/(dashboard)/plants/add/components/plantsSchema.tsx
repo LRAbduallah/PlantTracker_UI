@@ -26,7 +26,7 @@ export const plantSchema = z.object({
   // Classification
   habit: z.string().optional(),
   description: z.string().optional(),
-  red_list_category: z.enum(['EX', 'EW', 'CR', 'EN', 'VU', 'NT', 'LC','NIL','NE']),
+  red_list_category: z.enum(['EX', 'EW', 'CR', 'EN', 'VU', 'NT', 'LC','NIL','NE','']),
   uses: z.string().optional(),
   
   // Additional Notes

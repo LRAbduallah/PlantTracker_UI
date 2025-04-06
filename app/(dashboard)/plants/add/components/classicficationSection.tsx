@@ -13,12 +13,52 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { useEffect, useState } from 'react';
+import api from '@/lib/services/api';
 
 type ClassificationSectionProps = {
   control: Control<any>;
+  defaultHabit?: string;
+  defaultCategory?: string; 
+  isEditMode?: boolean;
 };
 
-export default function ClassificationSection({ control }: ClassificationSectionProps) {
+export default function ClassificationSection({ control , defaultCategory , defaultHabit , isEditMode}: ClassificationSectionProps) {
+    const [selectedHabit, setSelectedHabit] = useState<string | undefined>(
+      defaultHabit ? defaultHabit : undefined
+    );
+    const [selectedCategory, setSelectedCategory] = useState<string | undefined>(
+      defaultCategory ? defaultCategory : undefined
+    );
+    const [habits, setHabits] = useState([]);
+    const [isLoading, setLoading] = useState(true);
+
+    const fetchHabits = async () => {
+      try {
+        const response = await api.get('/habits/');
+        return response.data.habits;
+      } catch (error) {
+        console.error('Error fetching habits:', error);
+        throw error;
+      }
+    };
+
+    useEffect(() => {
+      const getHabits = async () => {
+        try {
+          const habitsData = await fetchHabits();
+          setHabits(habitsData);
+        } catch (error) {
+          // Handle error
+        } finally {
+          setLoading(false);
+        }
+      };
+      
+      getHabits();
+    }, []);
+
+
   return (
     <div className="space-y-4">
       <h3 className="text-lg font-medium">Classification</h3>
@@ -32,17 +72,38 @@ export default function ClassificationSection({ control }: ClassificationSection
               <Select 
                 onValueChange={field.onChange} 
                 defaultValue={field.value}
+                value={selectedHabit}
               >
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select habit" />
                   </SelectTrigger>
                 </FormControl>
-                <SelectContent>
+                {/* <SelectContent>
                   <SelectItem value="Tree">Tree</SelectItem>
                   <SelectItem value="Shrub">Shrub</SelectItem>
                   <SelectItem value="Herb">Herb</SelectItem>
                   <SelectItem value="Climber">Climber</SelectItem>
+                </SelectContent> */}
+                                <SelectContent>
+                  {isLoading ? (
+                    <SelectItem value="Loading" disabled>
+                      Loading locations...
+                    </SelectItem>
+                  ) : habits.length === 0 ? (
+                    <SelectItem value="No location" disabled>
+                      No locations available
+                    </SelectItem>
+                  ) : (
+                    habits.map((habit) => (
+                      <SelectItem 
+                        key={habit} 
+                        value={habit}
+                      >
+                        {habit}
+                      </SelectItem>
+                    ))
+                  )}
                 </SelectContent>
               </Select>
               <FormMessage />
@@ -58,6 +119,7 @@ export default function ClassificationSection({ control }: ClassificationSection
               <Select 
                 onValueChange={field.onChange} 
                 defaultValue={field.value}
+                value={selectedCategory}
               >
                 <FormControl>
                   <SelectTrigger>
@@ -72,6 +134,8 @@ export default function ClassificationSection({ control }: ClassificationSection
                   <SelectItem value="VU">Vulnerable (VU)</SelectItem>
                   <SelectItem value="NT">Near Threatened (NT)</SelectItem>
                   <SelectItem value="LC">Least Concern (LC)</SelectItem>
+                  <SelectItem value="NE">Not Evaluated (NE)</SelectItem>
+                  <SelectItem value="NIL">Not in list(NIL)</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />
