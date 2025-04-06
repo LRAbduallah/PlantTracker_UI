@@ -48,7 +48,7 @@ export default function BasicInformationSection({ control }: BasicInformationSec
           name="herbarium_id"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Herbarium ID *</FormLabel>
+              <FormLabel>Herbarium ID</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>

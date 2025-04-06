@@ -77,14 +77,6 @@ export function FilterSection({
           >
             <ListFilter className="h-4 w-4" />
           </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            className={filters.viewMode === 'map' ? 'bg-accent' : ''}
-            onClick={() => onFilterChange({ viewMode: 'map' })}
-          >
-            <Map className="h-4 w-4" />
-          </Button>
         </div>
         
         <Select 

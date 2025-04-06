@@ -109,15 +109,15 @@ export default function PlantView() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 bg-gray-50 rounded-lg">
           <div>
             <p className="text-sm text-gray-500">Herbarium ID</p>
-            <p className="font-medium">{plant.herbarium_id}</p>
+            <p className="font-medium">{plant.herbarium_id || 'Not specified'}</p>
           </div>
           <div>
             <p className="text-sm text-gray-500">Habit</p>
-            <p className="font-medium">{plant.habit}</p>
+            <p className="font-medium">{plant.habit || 'Not specified'}</p>
           </div>
           <div>
             <p className="text-sm text-gray-500">Life Cycle</p>
-            <p className="font-medium">{plant.life_cycle}</p>
+            <p className="font-medium">{plant.life_cycle || 'Not specified'}</p>
           </div>
           <div>
             <p className="text-sm text-gray-500">Location</p>
@@ -138,8 +138,10 @@ export default function PlantView() {
             {[
               ['Class', plant.taxonomic_class],
               ['Subclass', plant.taxonomic_subclass],
+              ['Series', plant.Series],
               ['Order', plant.taxonomic_order],
               ['Family', plant.family],
+              ['Subfamily', plant.subfamily],
               ['Genus', plant.genus],
               ['Species', plant.species],
             ].map(([label, value]) => (
@@ -158,25 +160,12 @@ export default function PlantView() {
             <p className="whitespace-pre-line text-gray-700">{plant.uses}</p>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <h4 className="font-semibold mb-2">Flowering Period</h4>
-              <p className="text-gray-700">{plant.flowering_period}</p>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-2">Fruiting Period</h4>
-              <p className="text-gray-700">{plant.fruiting_period}</p>
-            </div>
+          <div className="prose max-w-none">
+            <h3 className="text-xl font-semibold mb-3">Useful Parts</h3>
+            <p className="whitespace-pre-line text-gray-700">{plant.ethnobotanical_notes}</p>
           </div>
-        </section>
 
-        {/* Ethnobotanical Notes */}
-        {plant.ethnobotanical_notes && (
-          <section className="prose max-w-none">
-            <h3 className="text-xl font-semibold mb-3">Ethnobotanical Notes</h3>
-            <p className="text-gray-700">{plant.ethnobotanical_notes}</p>
-          </section>
-        )}
+        </section>
 
         {/* Remarks */}
         {plant.remarks && (

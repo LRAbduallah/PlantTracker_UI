@@ -27,7 +27,6 @@ import CollectionSection from '../../add/components/collectionSection';
 import DescriptionSection from '../../add/components/descriptionSection';
 import LocationSection from '../../add/components/locationSection';
 import AdditionalNotesSection from '../../add/components/notesSection';
-import PhenologySection from '../../add/components/phenologySection';
 import Imageupload from '../../add/components/plantImageUploadSection';
 import { plantSchema } from '../../add/components/plantsSchema';
 import TaxonomySection from '../../add/components/taxonomySection';
@@ -73,8 +72,10 @@ export default function EditPlantPage() {
       taxonomic_subclass: '',
       taxonomic_order: '',
       family: '',
+      subfamily:'',
       genus: '',
       species: '',
+      Series:'',
       collector: '',
       identifier: '',
       collection_date: new Date().toISOString().split('T')[0],
@@ -82,9 +83,6 @@ export default function EditPlantPage() {
       description: '',
       red_list_category: 'LC',
       uses: '',
-      flowering_period: '',
-      fruiting_period: '',
-      life_cycle: '',
       ethnobotanical_notes: '',
       remarks: '',
       location: undefined,
@@ -103,8 +101,10 @@ export default function EditPlantPage() {
         taxonomic_subclass: plant.taxonomic_subclass || '',
         taxonomic_order: plant.taxonomic_order || '',
         family: plant.family || '',
+        subfamily: plant.subfamily || '',
         genus: plant.genus || '',
         species: plant.species || '',
+        Series: plant.Series || '',
         collector: plant.collector || '',
         identifier: plant.identifier || '',
         collection_date: plant.collection_date || new Date().toISOString().split('T')[0],
@@ -112,9 +112,6 @@ export default function EditPlantPage() {
         description: plant.description || '',
         red_list_category: plant.red_list_category as "EX" | "EW" | "CR" | "EN" | "VU" | "NT" | "LC" || 'LC',
         uses: plant.uses || '',
-        flowering_period: plant.flowering_period || '',
-        fruiting_period: plant.fruiting_period || '',
-        life_cycle: plant.life_cycle,
         ethnobotanical_notes: plant.ethnobotanical_notes || '',
         remarks: plant.remarks || '',
         location: plant.location,
@@ -251,13 +248,13 @@ export default function EditPlantPage() {
               />
               <CategorySection control={form.control} />
               <DescriptionSection control={form.control} />
-              <PhenologySection
+              {/* <PhenologySection
                 control={form.control}
                 defaultValues={{
                   life_cycle: plant?.life_cycle
                 }}
                 isEditMode={true}
-              />
+              /> */}
               <AdditionalNotesSection control={form.control} />
               <Imageupload files={files} setFiles={setFiles} />
               <div className="flex justify-end space-x-4">

@@ -5,15 +5,18 @@ export const plantSchema = z.object({
   // Basic Information
   scientific_name: z.string().min(1, 'Scientific name is required'),
   tamil_name: z.string().optional(),
-  herbarium_id: z.string().min(1, 'Herbarium ID is required'),
+  herbarium_id: z.string().optional(),
   
   // Taxonomy
-  taxonomic_class: z.string().min(1, 'Class is required'),
-  taxonomic_subclass: z.string().min(1,'Sub Class is required'),
-  taxonomic_order: z.string().min(1,'Order is required'),
-  family: z.string().min(1, 'Family is required'),
-  genus: z.string().min(1, 'Genus is required'),
-  species: z.string().min(1, 'Species is required'),
+  taxonomic_class: z.string().optional(),
+  taxonomic_subclass: z.string().optional(),
+  taxonomic_order: z.string().optional(),
+  family: z.string().optional(),
+  subfamily: z.string().optional(),
+  genus: z.string().optional(),
+  species: z.string().optional(),
+  Series: z.string().optional(),
+
   
   // Collection Information
   collector: z.string().min(1, 'Collector is required'),
@@ -21,15 +24,10 @@ export const plantSchema = z.object({
   collection_date: z.string().min(1, 'Collection date is required'),
   
   // Classification
-  habit: z.enum(['Tree', 'Shrub', 'Herb', 'Climber']),
-  description: z.string().min(1, 'Description is required'),
-  red_list_category: z.enum(['EX', 'EW', 'CR', 'EN', 'VU', 'NT', 'LC']),
+  habit: z.string().optional(),
+  description: z.string().optional(),
+  red_list_category: z.enum(['EX', 'EW', 'CR', 'EN', 'VU', 'NT', 'LC','NIL','NE']),
   uses: z.string().optional(),
-  
-  // Phenology
-  flowering_period: z.string().optional(),
-  fruiting_period: z.string().optional(),
-  life_cycle: z.string().optional(),
   
   // Additional Notes
   ethnobotanical_notes: z.string().optional(),

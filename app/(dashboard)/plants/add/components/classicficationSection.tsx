@@ -28,7 +28,7 @@ export default function ClassificationSection({ control }: ClassificationSection
           name="habit"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Habit *</FormLabel>
+              <FormLabel>Habit</FormLabel>
               <Select 
                 onValueChange={field.onChange} 
                 defaultValue={field.value}
@@ -54,7 +54,7 @@ export default function ClassificationSection({ control }: ClassificationSection
           name="red_list_category"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Red List Category *</FormLabel>
+              <FormLabel>Red List Category</FormLabel>
               <Select 
                 onValueChange={field.onChange} 
                 defaultValue={field.value}

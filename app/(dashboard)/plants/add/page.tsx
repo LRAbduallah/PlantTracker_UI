@@ -24,7 +24,6 @@ import CollectionSection from './components/collectionSection';
 import DescriptionSection from './components/descriptionSection';
 import LocationSection from './components/locationSection';
 import AdditionalNotesSection from './components/notesSection';
-import PhenologySection from './components/phenologySection';
 import TaxonomySection from './components/taxonomySection';
 import Imageupload from './components/plantImageUploadSection';
 import React from 'react';
@@ -76,6 +75,8 @@ export default function AddPlantPage() {
       family: '',
       genus: '',
       species: '',
+      Series:'',
+      subfamily:'',
       collector: '',
       identifier: '',
       collection_date: new Date().toISOString().split('T')[0],
@@ -83,9 +84,6 @@ export default function AddPlantPage() {
       description: '',
       red_list_category: 'LC',
       uses: '',
-      flowering_period: '',
-      fruiting_period: '',
-      life_cycle: '',
       ethnobotanical_notes: '',
       remarks: '',
       location: undefined,
@@ -161,7 +159,7 @@ export default function AddPlantPage() {
               <LocationSection control={form.control} />
               <CategorySection control={form.control} />
               <DescriptionSection control={form.control} />
-              <PhenologySection control={form.control} />
+              {/* <PhenologySection control={form.control} /> */}
               <AdditionalNotesSection control={form.control} />
               <Imageupload files={files} setFiles={setFiles}/>
               <div className="flex justify-end space-x-4">

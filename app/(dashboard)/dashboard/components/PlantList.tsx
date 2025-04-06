@@ -73,12 +73,12 @@ export function PlantList({
                     )}
                     
                     {/* Favorite button */}
-                    <button onClick={(e) => onFavoriteToggle(plant.id, e)}>
+                    {/* <button onClick={(e) => onFavoriteToggle(plant.id, e)}>
                       <Heart 
                         size={16} 
                         className={favoritePlants.has(plant.id) ? "fill-red-500 text-red-500" : "text-gray-400"} 
                       />
-                    </button>
+                    </button> */}
                     
                     {/* Compare checkbox */}
                     {isCompareMode && (

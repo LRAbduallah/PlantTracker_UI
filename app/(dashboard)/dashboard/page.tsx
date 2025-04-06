@@ -3,9 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { AlertTriangle, RefreshCw } from 'lucide-react';
-import { useInView } from 'react-intersection-observer';
 import { Plant, PlantHabit, RedListCategory, Category } from '@/lib/types/plant';
-import plantService from '@/lib/services/plant.service';
 import api from '@/lib/services/api';
 import { PlantFilters as UIPlantFilters, DashboardStats, COLORS, CONSERVATION_COLORS } from './components/types';
 import { DashboardHeader } from './components/DashboardHeader';
@@ -14,7 +12,9 @@ import { FilterSection } from './components/FilterSection';
 import { PlantGrid } from './components/PlantGrid';
 import { PlantList } from './components/PlantList';
 import { PlantComparison } from './components/PlantComparison';
-import { MapView } from './components/MapView';
+
+// Cache duration in milliseconds (e.g., 5 minutes)
+const CACHE_DURATION = 5 * 60 * 1000;
 
 export default function PlantsDashboard() {
   // Core state
@@ -28,6 +28,7 @@ export default function PlantsDashboard() {
   const [redListStatuses, setRedListStatuses] = useState<RedListCategory[]>([]);
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const initialLoadComplete = useRef(false);
+  const cacheTimestamp = useRef<number | null>(null);
   
   // Favorite plants functionality
   const [favoritePlants, setFavoritePlants] = useState<Set<number>>(new Set());
@@ -237,13 +238,49 @@ export default function PlantsDashboard() {
     });
   }, [loadEnvironmentalData]);
 
-  // Initialize local storage for favorites
+  // Initialize local storage for favorites and cached data
   useEffect(() => {
+    // Load favorites
     const storedFavorites = localStorage.getItem('favoritePlants');
     if (storedFavorites) {
       setFavoritePlants(new Set(JSON.parse(storedFavorites).map(Number)));
     }
-  }, []);
+
+    // Check for cached plants data
+    const cachedPlantsData = localStorage.getItem('cachedPlantsData');
+    const cachedTimestamp = localStorage.getItem('cachedTimestamp');
+    
+    if (cachedPlantsData && cachedTimestamp) {
+      const timestamp = parseInt(cachedTimestamp, 10);
+      const now = Date.now();
+      
+      // Use cached data if it's still valid
+      if (now - timestamp < CACHE_DURATION) {
+        try {
+          const parsedData = JSON.parse(cachedPlantsData);
+          const uniqueHabits = Array.from(
+            new Set(parsedData.map((p: Plant) => p.habit).filter(Boolean))
+          ) as PlantHabit[];
+          
+          const uniqueStatuses = Array.from(
+            new Set(parsedData.map((p: Plant) => p.red_list_category).filter(Boolean))
+          ) as RedListCategory[];
+          
+          setHabits(uniqueHabits);
+          setRedListStatuses(uniqueStatuses);
+          setPlants(parsedData);
+          applyClientFilters(parsedData, filters);
+          calculateStats(parsedData);
+          initialLoadComplete.current = true;
+          cacheTimestamp.current = timestamp;
+          console.log('Using cached plants data');
+        } catch (error) {
+          console.error('Error parsing cached data:', error);
+          // If there's an error parsing, we'll fetch fresh data
+        }
+      }
+    }
+  }, [applyClientFilters, calculateStats, filters]);
 
   // Save favorites to local storage when they change
   useEffect(() => {
@@ -270,20 +307,7 @@ export default function PlantsDashboard() {
         const locationsData = (await api.get('/locations')).data;
         setLocations(locationsData);
         
-        // Get initial plants data for habits and statuses
-        const plantsData = (await plantService.getPlants({ page: 1 })).results;
-        
-        const uniqueHabits = Array.from(
-          new Set(plantsData.map(p => p.habit).filter(Boolean))
-        ) as PlantHabit[];
-        
-        const uniqueStatuses = Array.from(
-          new Set(plantsData.map(p => p.red_list_category).filter(Boolean))
-        ) as RedListCategory[];
-        
-        setHabits(uniqueHabits);
-        setRedListStatuses(uniqueStatuses);
-        
+        // No need to fetch initial plants here as we'll get all data at once
         setLoading(false);
       } catch (error) {
         console.error('Error fetching metadata:', error);
@@ -295,23 +319,43 @@ export default function PlantsDashboard() {
     fetchMetadata();
   }, [categories.length]);
 
-  // Fetch plants data
-  const fetchPlants = useCallback(async () => {
-    if (loading) return;
+  // Fetch all plants data with caching
+  const fetchAllPlants = useCallback(async () => {
+    // Don't fetch if already loading or if we have valid cached data
+    if (loading || (initialLoadComplete.current && cacheTimestamp.current && Date.now() - cacheTimestamp.current < CACHE_DURATION)) {
+      return;
+    }
     
     try {
       setLoading(true);
       setError(null);
       
-      // First fetch all plants
-      const response = await plantService.getPlants({
-        page: 1,
-        ordering: filters.sortBy === 'scientific_name_desc' ? '-scientific_name' : filters.sortBy
-      });
+      // Fetch all plants at once with a large page size
+      const response = await api.get('/plants/?page_size=1000');
+      const plantsData = response.data.results;
       
-      setPlants(response.results);
-      applyClientFilters(response.results, filters);
-      calculateStats(response.results);
+      // Extract unique habits and statuses
+      const uniqueHabits = Array.from(
+        new Set(plantsData.map((p: Plant) => p.habit).filter(Boolean))
+      ) as PlantHabit[];
+      
+      const uniqueStatuses = Array.from(
+        new Set(plantsData.map((p: Plant) => p.red_list_category).filter(Boolean))
+      ) as RedListCategory[];
+      
+      setHabits(uniqueHabits);
+      setRedListStatuses(uniqueStatuses);
+      
+      // Set plants and apply filters
+      setPlants(plantsData);
+      applyClientFilters(plantsData, filters);
+      calculateStats(plantsData);
+      
+      // Cache the data
+      const now = Date.now();
+      localStorage.setItem('cachedPlantsData', JSON.stringify(plantsData));
+      localStorage.setItem('cachedTimestamp', now.toString());
+      cacheTimestamp.current = now;
       
       initialLoadComplete.current = true;
       
@@ -321,7 +365,7 @@ export default function PlantsDashboard() {
     } finally {
       setLoading(false);
     }
-  }, [loading, filters, calculateStats, applyClientFilters]);
+  }, [loading, filters, applyClientFilters, calculateStats]);
 
   // Effect for filter changes
   useEffect(() => {
@@ -332,30 +376,9 @@ export default function PlantsDashboard() {
   // Effect for initial data loading
   useEffect(() => {
     if (categories.length > 0 && !initialLoadComplete.current && !loading) {
-      fetchPlants();
+      fetchAllPlants();
     }
-  }, [categories.length, fetchPlants, loading]);
-
-  // Pagination
-  const ITEMS_PER_PAGE = 12;
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const paginatedPlants = useCallback(() => {
-    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    return filteredPlants.slice(0, startIndex + ITEMS_PER_PAGE);
-  }, [filteredPlants, currentPage]);
-
-  // Effect for infinite scroll
-  const { ref, inView } = useInView({
-    threshold: 0.1,
-    rootMargin: '100px',
-  });
-
-  useEffect(() => {
-    if (inView && paginatedPlants().length < filteredPlants.length) {
-      setCurrentPage(prev => prev + 1);
-    }
-  }, [inView, paginatedPlants, filteredPlants.length]);
+  }, [categories.length, fetchAllPlants, loading]);
 
   // Handle filter changes
   const handleFilterChange = useCallback((newFilters: Partial<UIPlantFilters>) => {
@@ -418,7 +441,7 @@ export default function PlantsDashboard() {
           <DashboardHeader
             isCompareMode={isCompareMode}
             onCompareToggle={() => setIsCompareMode(!isCompareMode)}
-            onRefresh={fetchPlants}
+            onRefresh={fetchAllPlants}
           />
           
           {/* Dashboard Tabs */}
@@ -464,11 +487,9 @@ export default function PlantsDashboard() {
               />
             ) : (
               <>
-                {filters.viewMode === 'map' ? (
-                  <MapView />
-                ) : filters.viewMode === 'grid' ? (
+                {filters.viewMode === 'grid' ? (
                   <PlantGrid
-                    plants={paginatedPlants()}
+                    plants={filteredPlants}
                     favoritePlants={favoritePlants}
                     isCompareMode={isCompareMode}
                     selectedForComparison={selectedForComparison}
@@ -477,18 +498,13 @@ export default function PlantsDashboard() {
                   />
                 ) : (
                   <PlantList
-                    plants={paginatedPlants()}
+                    plants={filteredPlants}
                     favoritePlants={favoritePlants}
                     isCompareMode={isCompareMode}
                     selectedForComparison={selectedForComparison}
                     onFavoriteToggle={handleFavoriteToggle}
                     onCompareToggle={handleCompareToggle}
                   />
-                )}
-
-                {/* Infinite Scroll Trigger */}
-                {paginatedPlants().length < filteredPlants.length && (
-                  <div ref={ref} className="h-10" />
                 )}
 
                 {/* Loading State */}

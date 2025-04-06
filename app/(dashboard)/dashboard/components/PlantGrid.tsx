@@ -47,7 +47,7 @@ export function PlantGrid({
         <Link href={`/plants/${plant.id}`} key={plant.id} className="relative">
           <Card className="h-full hover:shadow-lg transition-shadow overflow-hidden">
             {/* Favorite button */}
-            <button 
+            {/* <button 
               className="absolute top-2 right-2 z-10 bg-white bg-opacity-80 rounded-full p-1 hover:bg-opacity-100 transition-colors"
               onClick={(e) => onFavoriteToggle(plant.id, e)}
             >
@@ -55,7 +55,7 @@ export function PlantGrid({
                 size={20} 
                 className={favoritePlants.has(plant.id) ? "fill-red-500 text-red-500" : "text-gray-400"} 
               />
-            </button>
+            </button> */}
             
             {/* Compare checkbox */}
             {isCompareMode && (

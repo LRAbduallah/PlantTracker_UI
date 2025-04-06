@@ -22,7 +22,7 @@ export default function TaxonomySection({ control }: TaxonomySectionProps) {
           name="taxonomic_class"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Class *</FormLabel>
+              <FormLabel>Class</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -35,7 +35,20 @@ export default function TaxonomySection({ control }: TaxonomySectionProps) {
           name="taxonomic_subclass"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Subclass *</FormLabel>
+              <FormLabel>Subclass</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+                        <FormField
+          control={control}
+          name="Series"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Series</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -48,7 +61,7 @@ export default function TaxonomySection({ control }: TaxonomySectionProps) {
           name="taxonomic_order"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Order *</FormLabel>
+              <FormLabel>Order</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -61,7 +74,20 @@ export default function TaxonomySection({ control }: TaxonomySectionProps) {
           name="family"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Family *</FormLabel>
+              <FormLabel>Family</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+                <FormField
+          control={control}
+          name="subfamily"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Sub Family</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -74,7 +100,7 @@ export default function TaxonomySection({ control }: TaxonomySectionProps) {
           name="genus"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Genus *</FormLabel>
+              <FormLabel>Genus</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -87,7 +113,7 @@ export default function TaxonomySection({ control }: TaxonomySectionProps) {
           name="species"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Species *</FormLabel>
+              <FormLabel>Species</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>

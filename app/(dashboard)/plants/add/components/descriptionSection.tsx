@@ -22,7 +22,7 @@ export default function DescriptionSection({ control }: DescriptionSectionProps)
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Description *</FormLabel>
+              <FormLabel>Description</FormLabel>
               <FormControl>
                 <Textarea className="min-h-[100px]" {...field} />
               </FormControl>
@@ -43,6 +43,20 @@ export default function DescriptionSection({ control }: DescriptionSectionProps)
             </FormItem>
           )}
         />
+        {/* Ethnobotanical Notes */}
+        <FormField
+            control={control}
+            name="ethnobotanical_notes"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Useful Part</FormLabel>
+                <FormControl>
+                  <Textarea className="min-h-[100px]" placeholder="Enter Useful Parts" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
       </div>
     </div>
   );

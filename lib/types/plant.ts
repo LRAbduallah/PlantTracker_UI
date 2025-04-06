@@ -12,8 +12,10 @@ export interface PlantInput {
   taxonomic_subclass?: string;
   taxonomic_order?: string;
   family: string;
+  subfamily: string;
   genus: string;
   species: string;
+  Series: string;
   collector: string;
   identifier: string;
   collection_date: string;

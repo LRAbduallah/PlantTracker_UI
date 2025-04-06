@@ -14,28 +14,19 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 import faviconV2 from '@/components/faviconV2.png';
-import { Toaster } from "@/components/ui/toaster"
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator
-} from '@/components/ui/breadcrumb';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import {
   Tooltip,
   TooltipContent,
+  TooltipProvider,
   TooltipTrigger
 } from '@/components/ui/tooltip';
 import { Analytics } from '@vercel/analytics/react';
-import { User } from './user';
-import Providers from './providers';
-import { NavItem } from './nav-item';
-import { SearchInput } from './search';
-import Footer from 'app/(info)/footer';
+import { NavItem } from 'app/(dashboard)/nav-item';
+import Providers from 'app/providers';
+import Footer from './footer';
+import { Toaster } from '@/components/ui/toaster';
 
 export default function DashboardLayout({
   children
@@ -44,23 +35,22 @@ export default function DashboardLayout({
 }) {
   return (
     <Providers>
+      <TooltipProvider>
       <main className="flex min-h-screen w-full flex-col bg-muted/40">
         <DesktopNav />
         <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
           <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
             <MobileNav />
-            <DashboardBreadcrumb/>
-            <SearchInput />
-            <User />
           </header>
           <main className="grid flex-1 items-start gap-2 p-4 sm:px-6 sm:py-0 md:gap-4 bg-muted/40">
             {children}
           </main>
-          <Toaster />
         <Footer />
+        <Toaster />
         </div>
         <Analytics />
       </main>
+      </TooltipProvider>
     </Providers>
   );
 }
@@ -68,31 +58,32 @@ export default function DashboardLayout({
 function DesktopNav() {
   return (
     <aside className="fixed inset-y-0 left-0 z-10 hidden w-20 flex-col border-r bg-background sm:flex">
-      <Link
-        href="https://www.sthinducollege.com/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <Image
-          src={faviconV2}
-          alt="Vellambi Forest Field Site"
-          width={100}
-          height={100}
-          className="rounded-md object-contain pt-4"
-        />
-      </Link>
+                    <Link
+                href="https://www.sthinducollege.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Image
+                  src={faviconV2}
+                  alt="Vellambi Forest Field Site"
+                  width={100}
+                  height={100}
+                  className="rounded-md object-contain pt-4"
+                />
+              </Link>
       <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
-        <NavItem href="/home" label="Home">
+
+      <NavItem href="/home" label="Home">
           <Home className="h-5 w-5" />
         </NavItem>
 
-        <NavItem href="/location" label="Location">
+      <NavItem href="/location" label="Location">
           <MapPin className="h-5 w-5" />
-        </NavItem>
+      </NavItem>
 
-        <NavItem href="/dashboard" label="Dashboard">
+      <NavItem href="/dashboard" label="Dashboard">
           <LayoutDashboard className="h-5 w-5" />
-        </NavItem>
+      </NavItem>
 
         <NavItem href="/plants" label="Plants">
           <Leaf className="h-5 w-5" />
@@ -192,29 +183,5 @@ function MobileNav() {
         </div>
       </SheetContent>
     </Sheet>
-  );
-}
-
-function DashboardBreadcrumb() {
-  return (
-    <Breadcrumb className="hidden md:flex pl-2">
-      <BreadcrumbList>
-        <BreadcrumbItem>
-          <BreadcrumbLink asChild>
-            <Link href="/dashboard">Dashboard</Link>
-          </BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        <BreadcrumbItem>
-          <BreadcrumbLink asChild>
-            <Link href="/plants">Plants</Link>
-          </BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        <BreadcrumbItem>
-          <BreadcrumbPage>All Plants</BreadcrumbPage>
-        </BreadcrumbItem>
-      </BreadcrumbList>
-    </Breadcrumb>
   );
 }

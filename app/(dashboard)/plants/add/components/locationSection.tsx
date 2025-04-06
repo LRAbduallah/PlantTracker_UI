@@ -94,7 +94,7 @@ export default function LocationSection({
           defaultValue={defaultLocationId}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Collection Location</FormLabel>
+              <FormLabel>Collection Location *</FormLabel>
               <Select 
                 disabled={isLoading}
                 defaultValue={field.value}
