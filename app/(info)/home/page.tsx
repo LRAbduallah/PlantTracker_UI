@@ -47,40 +47,39 @@ export default function ThesisFrontPage() {
       {/* University Logo/Emblem */}
 
       <div className="container flex flex-col items-center text-center">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8 }}
-          className="w-48 h-48 relative"
-        >
-          <Image
-            src="https://res.cloudinary.com/dji4motp1/image/upload/v1743876700/college_n0rmej.webp"
-            alt="College Logo"
-            fill
-            style={{ objectFit: 'contain' }}
-            priority
-          />
-        </motion.div>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8 }}
+        className="w-48 h-48 relative"
+      >
+        <Image
+          src="https://res.cloudinary.com/dji4motp1/image/upload/v1744135049/msuniv_logo_yifrhe.png"
+          alt="University Logo"
+          fill
+          style={{ objectFit: 'contain' }}
+          priority
+        />
+      </motion.div>
 
-        {/* Text content from the image */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8 }}
-        >
-          <div className="mt-4 p-4 rounded-lg max-w-2xl text-gray-800">
-            <h1 className="text-2xl font-bold">S. T. HINDU COLLEGE</h1>
-            <h2 className="text-xl font-bold mt-1">தெ. தி. இந்துக் கல்லூரி</h2>
-            <p className="mt-2 text-sm md:text-base">
-              Co-Educational | Nagercoil, Tamilnadu - 629 002.
-              <br />
-              Affiliated to Manonmaniam Sundaranar University.
-              <br />
-              Re-Accredited by NAAC with B++ Grade
-            </p>
-          </div>
-        </motion.div>
-      </div>
+      {/* Updated Text content */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8 }}
+      >
+        <div className="mt-4 p-4 rounded-lg max-w-2xl text-gray-800">
+          <h1 className="text-2xl font-bold uppercase">
+            Manonmaniam Sundaranar University
+          </h1>
+          <p className="mt-2 text-sm md:text-base">
+            Reaccredited with 'A' Grade (CGPA 3.13 Out of 4.0) by NAAC (3rd Cycle)
+            <br />
+            Tirunelveli - 627012, Tamilnadu, India
+          </p>
+        </div>
+      </motion.div>
+    </div>
 
       <motion.div
         className="container mx-auto px-4 py-8"
@@ -93,7 +92,7 @@ export default function ThesisFrontPage() {
           <Card className="border border-green-200 shadow-lg bg-white/90 backdrop-blur-sm">
             <CardHeader className="text-center border-b border-green-100 pb-6">
               <CardTitle className="text-3xl md:text-4xl font-serif text-green-800">
-                DIGITAL FLORA OF VELLAMBI MALAI IN VEERAPULI RESERVED FOREST
+                E-FLORA OF VELLAMBI MALAI IN VEERAPULI RESERVED FOREST OF KANNIYAKUMARI DISTRICT, TAMIL NADU, INDIA.
               </CardTitle>
               {/* <CardDescription className="text-lg md:text-xl mt-2 text-green-700">
                 Taxonomy and Biodiversity of the Vellambi Forest

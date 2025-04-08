@@ -62,7 +62,7 @@ export default function PlantView() {
         {/* Header Section */}
         <header className="space-y-4">
           <div className="flex items-center gap-2">
-            <h1 className="text-3xl font-bold text-gray-900">{plant.scientific_name}</h1>
+            <h1 className="text-3xl font-bold text-gray-900 italic">{plant.scientific_name}</h1>
             {plant.red_list_category && (
               <Badge variant="destructive">
                 {plant.red_list_category}

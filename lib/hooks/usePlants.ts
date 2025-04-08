@@ -125,6 +125,22 @@ export function usePlantsByHabit(habit: string) {
   });
 }
 
+export function usePlantsByClass(classs: string) {
+  return useQuery({
+    queryKey: ['plants', 'classs', classs],
+    queryFn: () => plantService.getPlantsByClass(classs),
+    enabled: !!classs,
+  });
+}
+
+export function usePlantsBySubClass(subclass: string) {
+  return useQuery({
+    queryKey: ['plants', 'subclass', subclass],
+    queryFn: () => plantService.getPlantsBySubClass(subclass),
+    enabled: !!subclass,
+  });
+}
+
 export function useAddPlantImage() {
   const queryClient = useQueryClient();
 

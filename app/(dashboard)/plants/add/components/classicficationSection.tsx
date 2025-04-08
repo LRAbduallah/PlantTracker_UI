@@ -70,7 +70,10 @@ export default function ClassificationSection({ control , defaultCategory , defa
             <FormItem>
               <FormLabel>Habit</FormLabel>
               <Select 
-                onValueChange={field.onChange} 
+                onValueChange={(value) => {
+                  field.onChange(value);
+                  setSelectedHabit(value);
+                }} 
                 defaultValue={field.value}
                 value={selectedHabit}
               >
@@ -117,7 +120,10 @@ export default function ClassificationSection({ control , defaultCategory , defa
             <FormItem>
               <FormLabel>Red List Category</FormLabel>
               <Select 
-                onValueChange={field.onChange} 
+                onValueChange={(value) => {
+                  field.onChange(value);
+                  setSelectedCategory(value);
+                }} 
                 defaultValue={field.value}
                 value={selectedCategory}
               >

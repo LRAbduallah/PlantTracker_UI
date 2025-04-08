@@ -64,7 +64,7 @@ export function PlantList({
               
               <div className="flex-grow">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-medium">{plant.scientific_name}</h3>
+                  <h3 className="font-medium italic">{plant.scientific_name}</h3>
                   <div className="flex items-center gap-2">
                     {plant.red_list_category && (
                       <Badge variant={getConservationBadgeVariant(plant.red_list_category)}>

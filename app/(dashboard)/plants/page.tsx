@@ -35,7 +35,7 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { usePlants, usePlantsByHabit } from '@/lib/hooks/usePlants';
+import { usePlants, usePlantsByHabit, usePlantsByClass, usePlantsBySubClass } from '@/lib/hooks/usePlants';
 import { Plant, PlantHabit, RedListCategory } from '@/lib/types/plant';
 import { ImageWithZoom } from '@/components/ui/imageWithZoom';
 import { base64ToImageBlob } from '@/lib/helper';
@@ -43,7 +43,7 @@ import api from '@/lib/services/api';
 
 export default function PlantsPage() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [currentHabit, setCurrentHabit] = useState<PlantHabit | 'all'>('all');
+  const [currentHabit, setCurrentHabit] = useState<string | 'all'>('all');
   const [username, setUsername] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [deletingPlantId, setDeletingPlantId] = useState<number | null>(null);
@@ -58,7 +58,11 @@ export default function PlantsPage() {
         ...(searchQuery ? {} : { page: currentPage }),
         ...(searchQuery ? {} : { ordering: "-last_updated" })
       })
-    : usePlantsByHabit(currentHabit);
+    : currentHabit === 'Polypetalae' || currentHabit === 'Gamopetalae' || currentHabit === 'Monochlamydeae'
+      ? usePlantsBySubClass(currentHabit)
+      : currentHabit === 'Monocotyledons' 
+        ? usePlantsByClass(currentHabit)
+        : usePlantsByHabit(currentHabit);
     
   // Set the plants data when fetchedPlants changes
   useEffect(() => {
@@ -70,7 +74,7 @@ export default function PlantsPage() {
   const plants = plantsData || fetchedPlants;
 
   const handleHabitChange = (habit: string) => {
-    setCurrentHabit(habit as PlantHabit | 'all');
+    setCurrentHabit(habit);
     setCurrentPage(1); // Reset to first page when habit changes
   };
 
@@ -158,12 +162,15 @@ const handleDeletePlant = async (plantId: number) => {
       >
         {/* Tab and Search Controls - Improved Responsive Layout */}
         <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:items-center md:justify-between">
-          <TabsList className="overflow-x-auto scrollbar-hide h-auto flex-wrap md:flex-nowrap">
+        <TabsList className="overflow-x-auto scrollbar-hide h-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-8">
             <TabsTrigger value="all" className="whitespace-nowrap">All Plants</TabsTrigger>
             <TabsTrigger value="Tree" className="whitespace-nowrap">Trees</TabsTrigger>
             <TabsTrigger value="Shrub" className="whitespace-nowrap">Shrubs</TabsTrigger>
             <TabsTrigger value="Herb" className="whitespace-nowrap">Herbs</TabsTrigger>
-            <TabsTrigger value="Climber" className="whitespace-nowrap">Climbers</TabsTrigger>
+            <TabsTrigger value="Polypetalae" className="whitespace-nowrap">Polypetalae</TabsTrigger>
+            <TabsTrigger value="Gamopetalae" className="whitespace-nowrap">Gamopetalae</TabsTrigger>
+            <TabsTrigger value="Monochlamydeae" className="whitespace-nowrap">Monochlamydeae</TabsTrigger>
+            <TabsTrigger value="Monocotyledons" className="whitespace-nowrap">Monocotyledons</TabsTrigger>
           </TabsList>
           <div className="flex flex-col sm:flex-row w-full sm:w-auto items-start sm:items-center gap-3">
             <div className="relative w-full">
@@ -274,7 +281,7 @@ const handleDeletePlant = async (plantId: number) => {
                         <div className="space-y-2">
                           <div>
                             <p className="text-sm font-medium">Scientific Name</p>
-                            <p className="text-sm truncate">{plant.scientific_name}</p>
+                            <p className="text-sm truncate italic">{plant.scientific_name}</p>
                           </div>
                           <div>
                             <p className="text-sm font-medium">Tamil Name</p>
@@ -399,7 +406,7 @@ const handleDeletePlant = async (plantId: number) => {
                                 className="w-12 h-12 object-cover rounded-lg"
                               />
                             </TableCell>
-                            <TableCell className="font-medium">
+                            <TableCell className="font-medium italic">
                               {plant.scientific_name}
                             </TableCell>
                             <TableCell className='max-xl:hidden'>{plant.tamil_name}</TableCell>

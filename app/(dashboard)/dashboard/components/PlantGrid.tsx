@@ -86,7 +86,7 @@ export function PlantGrid({
             </div>
             <CardContent className="p-4 space-y-3">
               <div className="flex items-start justify-between gap-2">
-                <h2 className="text-lg font-semibold text-gray-900">{plant.scientific_name}</h2>
+                <h2 className="text-lg font-semibold text-gray-900 italic">{plant.scientific_name}</h2>
                 {plant.red_list_category && (
                   <Badge variant={getConservationBadgeVariant(plant.red_list_category)}>
                     {plant.red_list_category}

@@ -86,6 +86,20 @@ class PlantService {
     return response.data
   }
 
+  async getPlantsByClass(classs: string): Promise<PaginatedPlantsResponse>  {
+    const response: AxiosResponse<PaginatedPlantsResponse> = await api.get(`${this.baseUrl}/by_class/`, {
+      params: { classs },
+    });
+    return response.data
+  }
+
+  async getPlantsBySubClass(subclass: string): Promise<PaginatedPlantsResponse>  {
+    const response: AxiosResponse<PaginatedPlantsResponse> = await api.get(`${this.baseUrl}/by_subclass/`, {
+      params: { subclass },
+    });
+    return response.data
+  }
+
   // Add image URL to a plant
   async addImageUrl(id: number, url: string): Promise<string[]> {
     const response: AxiosResponse<string[]> = await api.post(`${this.baseUrl}/${id}/add_image/`, {

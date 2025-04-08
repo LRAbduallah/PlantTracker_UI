@@ -8,21 +8,21 @@ export default function Footer() {
         {/* Scholar Info Section */}
         <div className="space-y-1 max-w-xl">
           <p>
-            <span className="font-semibold text-foreground">P. Shasheela</span>, Reg. No: 21213159262014
+            <span className="font-semibold text-foreground">P. Shasheela</span>, Reg. No: 21213152262014
           </p>
           <p>Research Scholar, S.T. Hindu College, Nagercoil - 629002</p>
           <p>
             Email:{' '}
             <a
-              href="mailto:sayishasheela.pg@gmail.com"
+              href="mailto:sajishasheelap@gmail.com"
               className="text-foreground hover:underline break-all"
             >
-              sayishasheela.pg@gmail.com
+            sajishasheelap@gmail.com
             </a>
           </p>
           <div className="mt-2 space-y-1">
             <p className="font-semibold text-foreground">Supervisor:</p>
-            <p className="font-semibold text-foreground">Dr. P. Uma, Assistant Professor</p>
+            <p className="font-semibold text-foreground">Dr. R. Uma, Assistant Professor</p>
             <p>S.T. Hindu College, Nagercoil - 629002</p>
             <p>
               Affiliated to Manonmaniam Sundaranar University,
