@@ -171,6 +171,7 @@ const handleDeletePlant = async (plantId: number) => {
             <TabsTrigger value="Gamopetalae" className="whitespace-nowrap">Gamopetalae</TabsTrigger>
             <TabsTrigger value="Monochlamydeae" className="whitespace-nowrap">Monochlamydeae</TabsTrigger>
             <TabsTrigger value="Monocotyledons" className="whitespace-nowrap">Monocotyledons</TabsTrigger>
+            <TabsTrigger value="Climber" className="whitespace-nowrap">Climber</TabsTrigger>
           </TabsList>
           <div className="flex flex-col sm:flex-row w-full sm:w-auto items-start sm:items-center gap-3">
             <div className="relative w-full">
