@@ -104,7 +104,13 @@ export default function ThesisFrontPage() {
                 />
               </motion.div>
               
-              <div className="mt-6 flex justify-center">
+              <div className="mt-6 flex justify-center gap-2">
+              <Button 
+                  onClick={() => router.push('/intro')}
+                  className="bg-green-700 hover:bg-green-800 text-white"
+                >
+                  Introduction
+                </Button>
                 <Button 
                   onClick={() => router.push('/location')}
                   className="bg-green-700 hover:bg-green-800 text-white"

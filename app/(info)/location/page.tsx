@@ -33,7 +33,7 @@ export default function LocationPage() {
   return (
     <div className="bg-white text-gray-800">
       {/* Hero Section */}
-      <section className="relative h-[60vh] bg-cover bg-center flex items-center justify-center" style={{ backgroundImage: 'url(https://res.cloudinary.com/dji4motp1/image/upload/v1743876701/vellambi_wdulcx.webp)' }}>
+      <section className="relative h-[60vh] bg-cover bg-center flex items-center justify-center" style={{ backgroundImage: 'url(https://res.cloudinary.com/dji4motp1/image/upload/v1745064419/WhatsApp_Image_2025-04-17_at_8.23.30_PM_aaiao9.jpg)' }}>
         <div className="bg-black/50 w-full h-full absolute top-0 left-0" />
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
@@ -113,7 +113,7 @@ export default function LocationPage() {
                 About the Area
               </h3>
               <p className="text-sm leading-relaxed">
-                Vellambi is a lush, biodiverse area located near Nagercoil, Tamil Nadu. The field site is surrounded by semi-evergreen forest patches, agricultural lands, and water bodies. It provides a perfect setting for ecological studies and fieldwork activities due to its rich flora and fauna.
+                Vellambi is a lush, biodiverse area located near Nagercoil, Tamil Nadu. The field site is surrounded by semi-evergreen forest patches, and water bodies. It provides a perfect setting for ecological studies and fieldwork activities due to its rich flora and fauna.
               </p>
             </div>
           </motion.div>
@@ -185,20 +185,12 @@ export default function LocationPage() {
         </div>
       </section>
 
-      {/* Soil Info with Detail */}
-      {/* <section className="max-w-5xl mx-auto px-4 py-12">
-        <h2 className="text-2xl font-semibold mb-4">Soil Characteristics</h2>
-        <p className="text-gray-700 leading-relaxed">
-          The soil in this region is predominantly <strong>lateritic and red loam</strong>, well-drained and rich in iron and aluminum. It supports a variety of plant species, including medicinal herbs, shrubs, and agricultural crops.
-        </p>
-      </section> */}
-
       {/* Local Community Extended */}
       <section className="bg-gray-50 py-12">
         <div className="max-w-5xl mx-auto px-4">
           <h2 className="text-2xl font-semibold mb-4">Local Community</h2>
           <p className="text-gray-700 mb-4">
-            The Kanikaran people living around Vellambi are primarily engaged in agriculture, fishing, and local crafts. They contribute significantly to the conservation and sustainability of the ecosystem through their traditional knowledge and harmonious living. Their deep understanding of local medicinal plants has been passed down through generations, making them valuable contributors to ethnobotanical research.
+            The Kanikaran people living around Vellambi are primarily engaged in fishing, and local crafts. They contribute significantly to the conservation and sustainability of the ecosystem through their traditional knowledge and harmonious living. Their deep understanding of local medicinal plants has been passed down through generations, making them valuable contributors to ethnobotanical research.
           </p>
         </div>
       </section>
@@ -209,7 +201,8 @@ export default function LocationPage() {
           <h2 className="text-2xl font-semibold mb-6">Photo Gallery</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {[
-              'https://res.cloudinary.com/dji4motp1/image/upload/v1743876701/vellambi_wdulcx.webp',
+              'https://res.cloudinary.com/dji4motp1/image/upload/v1743876701/vellambi_wdulcx.webp','https://res.cloudinary.com/dji4motp1/image/upload/v1745064419/WhatsApp_Image_2025-04-17_at_8.23.30_PM_aaiao9.jpg'
+
               // Add more images when available
             ].map((src, i) => (
               <motion.div
